@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  */
 public class PerspectiveBridge {
 
-  private static final Logger log = LoggerFactory.getLogger("AI-Designer.PerspectiveBridge");
+  private static final Logger log = LoggerFactory.getLogger("Arc-Module.PerspectiveBridge");
 
   private static final ResourceType PERSPECTIVE_VIEWS =
       new ResourceType("com.inductiveautomation.perspective", "views");

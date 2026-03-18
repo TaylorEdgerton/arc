@@ -7,8 +7,8 @@ import java.awt.Dimension;
 public class AiChatPanel extends DockableFrame {
 
   public AiChatPanel(ChatWindow chatWindow) {
-    super("ai-assistant");
-    setTitle("AI Assistant");
+    super("claude");
+    setTitle("Claude");
     setInitSide(DockContext.DOCK_SIDE_EAST);
     setInitMode(DockContext.STATE_FRAMEDOCKED);
     setPreferredSize(new Dimension(380, 600));

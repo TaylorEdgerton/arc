@@ -141,7 +141,7 @@ public class MarkdownRenderer {
   }
 
   private static String permissionActionHref(String requestId, String action) {
-    return "https://ai-designer.local/permission?id="
+    return "https://claude.local/permission?id="
         + escapeHtml(requestId)
         + "&action="
         + escapeHtml(action);

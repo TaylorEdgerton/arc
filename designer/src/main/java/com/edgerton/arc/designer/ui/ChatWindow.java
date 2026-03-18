@@ -20,7 +20,7 @@ import javax.swing.event.HyperlinkEvent;
  */
 public class ChatWindow extends JPanel {
 
-  private static final String ACTION_LINK_HOST = "ai-designer.local";
+  private static final String ACTION_LINK_HOST = "claude.local";
 
   private final JEditorPane conversationPane;
   private final JTextField inputField;
