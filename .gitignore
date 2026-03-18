@@ -1,0 +1,27 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+
+# Build output
+build/
+*.class
+*.modl
+
+# Gradle
+.gradle/
+
+# Backup files
+*.bak
