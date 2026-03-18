@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /** Validates that the Claude Code CLI is installed on the developer's machine. */
 public class ClaudeCodeSetupChecker {
 
-  private static final Logger log = LoggerFactory.getLogger("AI-Designer.SetupChecker");
+  private static final Logger log = LoggerFactory.getLogger("Arc-Module.SetupChecker");
 
   private String claudeVersion;
 

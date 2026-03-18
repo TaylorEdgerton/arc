@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TagBridge {
 
-  private static final Logger log = LoggerFactory.getLogger("AI-Designer.TagBridge");
+  private static final Logger log = LoggerFactory.getLogger("Arc-Module.TagBridge");
   private static final int TIMEOUT_SECONDS = 10;
   private static final int DEFAULT_BROWSE_LIMIT = 500;
   private static final int MAX_BROWSE_LIMIT = 2000;

@@ -1,5 +1,6 @@
 package com.edgerton.arc.designer.mcp;
 
+import com.edgerton.arc.designer.bridge.NamedQueryBridge;
 import com.edgerton.arc.designer.bridge.PerspectiveBridge;
 import com.edgerton.arc.designer.bridge.TagBridge;
 import com.edgerton.arc.designer.claude.ClaudeCodeManager;
@@ -24,7 +25,7 @@ import org.slf4j.LoggerFactory;
  */
 public class McpToolServer {
 
-  private static final Logger log = LoggerFactory.getLogger("AI-Designer.McpServer");
+  private static final Logger log = LoggerFactory.getLogger("Arc-Module.McpServer");
   private static final String MCP_PROTOCOL_VERSION = "2024-11-05";
   private static final String SERVER_NAME = "ignition-designer-mcp";
   private static final String SERVER_VERSION = "0.1.0";
@@ -32,6 +33,7 @@ public class McpToolServer {
   private final PerspectiveBridge bridge;
   private final ProjectWorkspaceManager workspaceManager;
   private final TagBridge tagBridge;
+  private final NamedQueryBridge namedQueryBridge;
   private final PermissionPromptCoordinator permissionPromptCoordinator;
   private HttpServer server;
   private int port;
@@ -40,10 +42,12 @@ public class McpToolServer {
       PerspectiveBridge bridge,
       ProjectWorkspaceManager workspaceManager,
       TagBridge tagBridge,
+      NamedQueryBridge namedQueryBridge,
       PermissionPromptCoordinator permissionPromptCoordinator) {
     this.bridge = bridge;
     this.workspaceManager = workspaceManager;
     this.tagBridge = tagBridge;
+    this.namedQueryBridge = namedQueryBridge;
     this.permissionPromptCoordinator = permissionPromptCoordinator;
   }
 
@@ -245,6 +249,23 @@ public class McpToolServer {
                 optionalBoolean("recursive", "Include child tag configurations (default false)")),
             new String[] {"paths"}));
 
+    // --- Named query read tools (US-018) ---
+    toolsList.add(
+        defineTool(
+            "list_named_queries",
+            "List all named query resources in the project, grouped by folder path. "
+                + "Returns query names organized by their folder hierarchy.",
+            new JsonObject()));
+
+    toolsList.add(
+        defineTool(
+            "read_named_query",
+            "Read a named query's full definition including SQL text, parameter definitions, "
+                + "database connection reference, and query type. "
+                + "Accepts a full path from list_named_queries (e.g. 'ignition/named-query/folder/myQuery') "
+                + "or a bare path (e.g. 'folder/myQuery' or 'myQuery').",
+            requiredString("query_path", "Named query resource path from list_named_queries")));
+
     JsonObject result = new JsonObject();
     result.add("tools", toolsList);
     return jsonRpcResult(id, result);
@@ -320,6 +341,12 @@ public class McpToolServer {
           resultText =
               tagBridge.readTagConfiguration(
                   getStringList(arguments, "paths"), getBool(arguments, "recursive", false));
+          break;
+        case "list_named_queries":
+          resultText = namedQueryBridge.listNamedQueries();
+          break;
+        case "read_named_query":
+          resultText = namedQueryBridge.readNamedQuery(getStr(arguments, "query_path"));
           break;
         default:
           resultText = "Unknown tool: " + toolName;

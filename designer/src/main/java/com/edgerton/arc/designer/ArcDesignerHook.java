@@ -1,5 +1,6 @@
 package com.edgerton.arc.designer;
 
+import com.edgerton.arc.designer.bridge.NamedQueryBridge;
 import com.edgerton.arc.designer.bridge.PerspectiveBridge;
 import com.edgerton.arc.designer.bridge.TagBridge;
 import com.edgerton.arc.designer.claude.ClaudeCodeManager;
@@ -45,11 +46,15 @@ public class ArcDesignerHook extends AbstractDesignerModuleHook {
     // Create tag bridge for read-only tag access
     TagBridge tagBridge = new TagBridge(context);
 
+    // Create named query bridge for read-only query access
+    NamedQueryBridge namedQueryBridge = new NamedQueryBridge(context);
+
     PermissionPromptCoordinator permissionPromptCoordinator = new PermissionPromptCoordinator();
 
     // Start MCP server exposing bridge tools
     mcpToolServer =
-        new McpToolServer(bridge, workspaceManager, tagBridge, permissionPromptCoordinator);
+        new McpToolServer(
+            bridge, workspaceManager, tagBridge, namedQueryBridge, permissionPromptCoordinator);
     int mcpPort = mcpToolServer.start();
 
     // Start Claude Code process

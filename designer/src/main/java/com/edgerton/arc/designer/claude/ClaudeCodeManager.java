@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ClaudeCodeManager {
 
-  private static final Logger log = LoggerFactory.getLogger("AI-Designer.ClaudeCode");
+  private static final Logger log = LoggerFactory.getLogger("Arc-Module.ClaudeCode");
   public static final String MCP_SERVER_ID = "ignition-designer";
   public static final String PERMISSION_PROMPT_TOOL_NAME = "permission_prompt";
   static final String FILE_TOOLS = "Read,Write,Edit,MultiEdit,Skill,Task,Glob";
